@@ -1,0 +1,40 @@
+<!doctype html>
+<html ng-app="repository">
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link href="assets/css/pre-loader.component.min.css" rel="stylesheet">
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js" integrity="sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="assets/js/repository.module.min.js" type="text/javascript"></script>
+    <script src="assets/js/list.controller.js" type="text/javascript"></script>
+  </head>
+  <body>
+   <div class="col-md-6 offset-md-3 mt-5">
+     <h4>List of approved projects</h4>
+     <div class="table-responsive">
+      <table class="table table-striped table-sm" id="table1">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Matric number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="student in approved_students">
+            <th scope="row"> {{$index + 1}} </th>
+            <td> {{student.name}} </td>
+            <td>{{student.matricNumber}}</td>
+          </tr>
+        </tbody>
+      </table>
+     </div>
+ </div> 
+
+<div class="lds-spinner-wrap" ng-show="loading">
+  <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+
+</body>
+
+</html>

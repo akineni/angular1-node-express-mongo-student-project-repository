@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="repository">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="assets/css/bootstrapv5.0.0-alpha2.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/app.min.css">
+    <link href="assets/css/pre-loader.component.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style type="text/css">
+
+        @keyframes removed-item-animation {
+   0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+ 
+    30% {
+        opacity: 1;
+        transform: translateX(50px);
+    }
+ 
+    80% {
+        opacity: 1;
+        transform: translateX(-800px);
+    }
+ 
+    100% {
+        opacity: 0;
+        transform: translateX(-800px);
+    }
+}
+
+
+@keyframes openspace {
+    to {
+        height: auto;
+    }
+}
+ 
+@keyframes restored-item-animation {
+    0% {
+        opacity: 0;
+        transform: translateX(300px);
+    }
+ 
+    70% {
+        opacity: 1;
+        transform: translateX(-50px);
+    }
+ 
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+        .tr-shadow.ng-enter, .tr-shadow.ng-move {
+            animation: 
+                openspace .3s ease forwards, 
+                restored-item-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+        }
+
+        .tr-shadow.ng-leave {
+            animation: removed-item-animation .8s cubic-bezier(.65,-0.02,.72,.29);
+        }
+    </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js" integrity="sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-animate/1.8.2/angular-animate.min.js" integrity="sha512-jZoujmRqSbKvkVDG+hf84/X11/j5TVxwBrcQSKp1W+A/fMxmYzOAVw+YaOf3tWzG/SjEAbam7KqHMORlsdF/eA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="assets/js/repository.module.min.js" type="text/javascript"></script>
+    <script src="assets/js/admin.controller.js" type="text/javascript"></script>
+</head>
+
+<body ng-controller="adminCtrl" ng-cloak>
+    <nav class="navbar navbar-light">
+        <div class="container d-block">
+            <a href="admin.html"><i class="fas fa-chevron-left"></i></a>
+            <a class="navbar-brand ms-4" href="admin.html">
+                <img src="assets/images/logo/logo.png">
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4 class="card-title text-success">Approved</h4>
+            </div>
+            <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0 table-striped" id="table1">
+                            <thead>
+                                <tr>
+                                    <th>S/n</th>
+                                    <th>Name</th>
+                                    <th>Matric number</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tr-shadow" 
+                                ng-repeat="student in students | filter: {approved: true}">
+                                    <td>{{ $index+1 }}</td>
+                                    <td>{{student.name}}</td>
+                                    <td><code>{{student.matricNumber}}</code></td>
+                                    <td  style="white-space: nowrap;"><button type="button" class="btn btn-danger btn-sm"
+                                        ng-click="approve(student, 0)">Reject &#x2715;</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4 class="card-title text-danger">Unapproved</h4>
+            </div>
+            <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0 table-striped" id="table2">
+                            <thead>
+                                <tr>
+                                    <th>S/n</th>
+                                    <th>Name</th>
+                                    <th>Matric number</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tr-shadow"
+                                ng-repeat="student in students | filter: {approved: false}">
+                                    <td>{{ $index+1 }}</td>
+                                    <td>{{student.name}}</td>
+                                    <td><code>{{student.matricNumber}}</code></td>
+                                    <td style="white-space: nowrap;"><button type="button" class="btn btn-success btn-sm"
+                                        ng-click="approve(student)">Approve 
+                                        <i class="fas fa-check-double"></i></button>
+    <a href="http://localhost:3000/download/{{student.matricNumber}}/project_implementation" 
+    title="Download project implementation">
+                                            <i class="far fa-file-archive" style="width: 22px;"></i>
+                                        </a>
+    <a href="http://localhost:3000/download/{{student.matricNumber}}/project_documentation"
+    title="Download project documentation">
+        <i class="far fa-file-word" style="width: 22px;"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="lds-spinner-wrap" ng-show="loading">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+      </div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js" integrity="sha512-UwcC/iaz5ziHX7V6LjSKaXgCuRRqbTp1QHpbOJ4l1nw2/boCfZ2KlFIqBUA/uRVF0onbREnY9do8rM/uT/ilqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </body>
+</html>
